@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const errorMiddleware = require("./middlewares/helpers/error.js");
+const { getVersion, getDescription } = require('./sordgom_api.js');
 
 const app = express();
 
@@ -15,6 +16,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
+
+app.get('/version', getVersion);
+app.get('/description', getDescription);
+
 __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/build")));
